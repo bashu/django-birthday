@@ -1,1 +1,1 @@
-Please refer to the documentation in /docs/.
+Please refer to `the documentation <http://django-birthday.rtfd.com/>`_.
