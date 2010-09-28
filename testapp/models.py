@@ -8,7 +8,7 @@ class TestModel(models.Model):
     objects = BirthdayManager()
     
     class Meta:
-        ordering = ['birthday']
+        ordering = ['id']
         
         
 class TestModel2(models.Model):

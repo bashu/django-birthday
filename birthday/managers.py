@@ -3,6 +3,22 @@ from datetime import date
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
 
+CASE = "CASE WHEN %(bdoy)s<%(cdoy)s THEN %(bdoy)s+365 ELSE %(bdoy)s END"
+
+def _order(manager, reverse=False, case=False):
+    cdoy = date.today().timetuple().tm_yday
+    bdoy = manager._birthday_doy_field
+    doys = {'cdoy': cdoy, 'bdoy': bdoy}
+    if case:
+        qs = manager.extra(select={'internal_bday_order': CASE % doys})
+        order_field = 'internal_bday_order'
+    else:
+        qs = manager.all()
+        order_field = bdoy
+    if reverse:
+        return qs.order_by('-%s' % order_field)
+    return qs.order_by('%s' % order_field)
+
 class BirthdayManager(Manager):    
     @property
     def _birthday_doy_field(self):
@@ -13,7 +29,8 @@ class BirthdayManager(Manager):
             day = date.today()
         return day.timetuple().tm_yday
             
-    def get_upcoming_birthdays(self, days=30, after=None, include_day=True):
+    def get_upcoming_birthdays(self, days=30, after=None, include_day=True,
+            order=True, reverse=False):
         today = self._doy(after)
         limit = today + days
         q = Q(**{'%s__gt%s' % (self._birthday_doy_field, 'e' if include_day else ''): today})
@@ -24,13 +41,15 @@ class BirthdayManager(Manager):
             q2 = Q(**{'%s__gte' % self._birthday_doy_field: today})
             q2 &= Q(**{'%s__lt' % self._birthday_doy_field: limit})
             q = q | q2
-        return self.filter(q)
+        if order:
+            qs = _order(self, reverse, True)
+            return qs.filter(q)
+        else:
+            return self.filter(q)
     
     def get_birthdays(self, day=None):
         today = self._doy(day)
         return self.filter(**{self._birthday_doy_field: today})
     
     def order_by_birthday(self, reverse=False):
-        if reverse:
-            return self.order_by('-%s' % self._birthday_doy_field)
-        return self.order_by(self._birthday_doy_field)
+        return _order(self, reverse)

@@ -42,9 +42,14 @@ Method References
 
     Returns a queryset containing objects that have an upcoming birthday.
 
-    :param days: *Optional*. Amount of days that still count as 'upcoming', defaults to 30.
+    :param days: *Optional*. Amount of days that still count as 'upcoming',
+                 defaults to 30.
     :param after: *Optional*. Start day to use, defaults to 'today'.
     :param include_day: *Optional*. Include the 'after' day for lookups.
+    :param order: *Optional*. Whether the queryset should be ordered by birthday,
+                  defaults to True.
+    :param reverse: *Optional*. Only applies when `order` is True. Apply
+                    reverse ordering.
     :rtype: Instance of :class:`django.db.models.query.QuerySet`.
     
     

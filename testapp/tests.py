@@ -1,4 +1,3 @@
-from _settings_patcher import *
 from birthday.fields import BirthdayField
 from datetime import date
 from django.core.exceptions import FieldError
@@ -9,6 +8,7 @@ import os
 
 thisdir = os.path.abspath(os.path.dirname(__file__))
 fixture = os.path.join(thisdir, 'fixtures', 'testdata.json')
+field = TestModel._meta.birthday_field
 
 class BirthdayTests(TestCase):
     fixtures = [fixture]
@@ -19,7 +19,6 @@ class BirthdayTests(TestCase):
         self.assertEqual(TestModel.objects.all().count(), 3)
         
     def test_02_ordering(self):
-        field = TestModel._meta.birthday_field
         pks1 = [obj.pk  for obj in TestModel.objects.order_by('birthday')]
         pks2 = [obj.pk  for obj in TestModel.objects.order_by_birthday()]
         self.assertNotEqual(pks1, pks2)
@@ -39,6 +38,12 @@ class BirthdayTests(TestCase):
         dec31 = date(year=2010, month=12, day=31)
         self.assertEqual(TestModel.objects.get_birthdays(dec31).count(), 1)
         self.assertEqual(TestModel.objects.get_upcoming_birthdays(30, dec31).count(), 3)
+        doys = [getattr(obj, field.doy_name) for obj in TestModel.objects.get_upcoming_birthdays(30, dec31)]
+        self.assertEqual(doys, [365,1,2])
+        doys = [getattr(obj, field.doy_name) for obj in TestModel.objects.get_upcoming_birthdays(30, dec31, reverse=True)]
+        self.assertEqual(doys, [2,1,365])
+        doys = [getattr(obj, field.doy_name) for obj in TestModel.objects.get_upcoming_birthdays(30, dec31, order=False)]
+        self.assertEqual(doys, [1,2,365])
         self.assertEqual(TestModel.objects.get_upcoming_birthdays(30, dec31, False).count(), 2)
         self.assertTrue(TestModel.objects.get_birthdays().count() in [0,1])
         
