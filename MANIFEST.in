@@ -1,0 +1,5 @@
+include AUTHORS
+include README.rst
+include LICENSE
+recursive-exclude birthday/fixtures *
+recursive-exclude birthday/tests *
