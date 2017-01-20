@@ -1,7 +1,7 @@
 django-birthday
 ===============
 
-Helper field and manager for working with birthdays.
+django-birthday is a helper library to work with birthdays in models.
 
 Authored by `Jonas Obrist <https://github.com/ojii>`_,  and some great
 `contributors <https://github.com/bashu/django-birthday/contributors>`_.
