@@ -26,6 +26,7 @@ class BirthdayField(DateField):
         cls._meta.birthday_field = self
 
         self.doy_name = '%s_dayofyear_internal' % name
-        internal_field.contribute_to_class(cls, self.doy_name)
+        if not hasattr(cls, self.doy_name):
+            internal_field.contribute_to_class(cls, self.doy_name)
 
         pre_save.connect(pre_save_listener, sender=cls)
