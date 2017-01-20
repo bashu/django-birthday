@@ -7,18 +7,6 @@ import codecs
 
 from setuptools import setup, find_packages
 
-# When creating the sdist, make sure the django.mo file also exists:
-if 'sdist' in sys.argv or 'develop' in sys.argv:
-    os.chdir('birthday')
-    try:
-        from django.core import management
-        management.call_command('compilemessages', stdout=sys.stderr, verbosity=1)
-    except ImportError:
-        if 'sdist' in sys.argv:
-            raise
-    finally:
-        os.chdir('..')
-
 def read(*parts):
     file_path = os.path.join(os.path.dirname(__file__), *parts)
     return codecs.open(file_path, encoding='utf-8').read()
