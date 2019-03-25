@@ -7,7 +7,14 @@ matrix:
     - python: 3.7
       dist: xenial
       sudo: true
+  exclude:
+    - python: "2.7"
+      env: DJANGO_VERSION=2.1
+    - python: "2.7"
+      env: DJANGO_VERSION=2.0
 env:
+  - DJANGO_VERSION=2.1
+  - DJANGO_VERSION=2.0
   - DJANGO_VERSION=1.11
 before_install:
   - pip install -q django==$DJANGO_VERSION
