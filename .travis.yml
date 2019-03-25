@@ -1,22 +1,24 @@
 language: python
 python:
-  - "3.4"
   - "2.7"
+# Enable 3.7 without globally enabling sudo and dist: xenial for other build jobs
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
+  exclude:
+    - python: "2.7"
+      env: DJANGO_VERSION=2.1
+    - python: "2.7"
+      env: DJANGO_VERSION=2.0
 env:
-  - DJANGO_VERSION=1.4.2
-  - DJANGO_VERSION=1.5
-  - DJANGO_VERSION=1.6
-  - DJANGO_VERSION=1.7
-  - DJANGO_VERSION=1.8
-  - DJANGO_VERSION=1.9
-  - DJANGO_VERSION=1.10
+  - DJANGO_VERSION=2.1
+  - DJANGO_VERSION=2.0
+  - DJANGO_VERSION=1.11
 before_install:
   - pip install -q django==$DJANGO_VERSION
 install:
   - python setup.py develop
 script:
-  - python setup.py test
-matrix:
-  exclude:
-    - python: "3.4"
-      env: DJANGO_VERSION=1.4.2
+- python setup.py test
