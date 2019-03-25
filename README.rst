@@ -41,12 +41,13 @@ A model could look like this:
 .. code-block:: python
 
     from django.db import models
+    from django.conf import settings
 
     import birthday
 
 
     class UserProfile(models.Model):
-        user = models.ForeignKey('auth.User')
+        user = models.ForeignKey(settings.AUTH_USER_MODEL)
         birthday = birthday.fields.BirthdayField()
 
         objects = birthday.managers.BirthdayManager()

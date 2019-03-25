@@ -12,11 +12,14 @@ should use as the manager on your model.
 
 A model could look like this::
 
-    import birthday
     from django.db import models
+    from django.conf import settings
     
+    import birthday
+
+
     class UserProfile(models.Model):
-        user = models.ForeignKey('auth.User')
+        user = models.ForeignKey(settings.AUTH_USER_MODEL)
         birthday = birthday.fields.BirthdayField()
         
         objects = birthday.managers.BirthdayManager()
