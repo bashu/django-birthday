@@ -1,17 +1,14 @@
+# Config file for automatic testing at travis-ci.org
+dist: xenial
 language: python
+
+sudo: false
 python:
+  - "3.7"
+  - "3.6"
+  - "3.5"
+  - "3.4"
   - "2.7"
-# Enable 3.7 without globally enabling sudo and dist: xenial for other build jobs
-matrix:
-  include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
-  exclude:
-    - python: "2.7"
-      env: DJANGO_VERSION=2.1
-    - python: "2.7"
-      env: DJANGO_VERSION=2.0
 env:
   - DJANGO_VERSION=2.1
   - DJANGO_VERSION=2.0
@@ -21,4 +18,12 @@ before_install:
 install:
   - python setup.py develop
 script:
-- python setup.py test
+  - python setup.py test
+matrix:
+  exclude:
+    - python: "3.4"
+      env: DJANGO_VERSION=2.1
+    - python: "2.7"
+      env: DJANGO_VERSION=2.1
+    - python: "2.7"
+      env: DJANGO_VERSION=2.0
