@@ -9,14 +9,7 @@ from django.core.exceptions import FieldError
 from birthday.fields import BirthdayField
 from birthday.managers import BirthdayManager
 
-
-class TestModel(models.Model):
-    birthday = BirthdayField()
-    objects = BirthdayManager()
-
-    class Meta:
-        app_label = 'birthday'
-        ordering = ('pk',)
+from .models import TestModel
 
         
 class BirthdayTest(TestCase):

@@ -16,7 +16,7 @@ Authored by `Jonas Obrist <https://github.com/ojii>`_,  and some great
     :target: https://pypi.python.org/pypi/django-birthday/
 
 .. image:: https://img.shields.io/travis/bashu/django-birthday.svg
-    :target: https://travis-ci.org/bashu/django-birthday/
+    :target: https://travis-ci.com/github/bashu/django-birthday/
 
 Installation
 ------------
