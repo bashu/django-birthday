@@ -43,14 +43,14 @@ A model could look like this:
     from django.db import models
     from django.conf import settings
 
-    import birthday
+    from birthday import BirthdayField, BirthdayManager
 
 
     class UserProfile(models.Model):
         user = models.ForeignKey(settings.AUTH_USER_MODEL)
-        birthday = birthday.fields.BirthdayField()
+        birthday = BirthdayField()
 
-        objects = birthday.managers.BirthdayManager()
+        objects = BirthdayManager()
 
 Get all user profiles within the next 30 days:
 

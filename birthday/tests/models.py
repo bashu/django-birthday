@@ -1,11 +1,11 @@
 from django.db import models
 
-import birthday
+from birthday import BirthdayField, BirthdayManager
 
 
 class TestModel(models.Model):
-    birthday = birthday.fields.BirthdayField()
-    objects = birthday.managers.BirthdayManager()
+    birthday = BirthdayField()
+    objects = BirthdayManager()
 
     class Meta:
         ordering = ('pk',)
