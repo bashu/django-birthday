@@ -4,6 +4,8 @@ from django.core.exceptions import FieldError
 from django.db.models.fields import DateField, PositiveSmallIntegerField
 from django.db.models.signals import pre_save
 
+_doy_field_name = lambda name: "%s_dayofyear_internal" % name
+
 
 def pre_save_listener(instance, **kwargs):
     field_obj = instance._meta.birthday_field
@@ -20,7 +22,7 @@ class BirthdayField(DateField):
             raise FieldError("django-birthday does not support multiple BirthdayFields on a single model")
         cls._meta.birthday_field = self
 
-        self.doy_name = "%s_dayofyear_internal" % name
+        self.doy_name = _doy_field_name(name)
         if not hasattr(cls, self.doy_name):
             dayofyear_field = PositiveSmallIntegerField(editable=False, default=None, null=True)
             dayofyear_field.creation_counter = self.creation_counter
