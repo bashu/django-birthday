@@ -1,24 +1,17 @@
+# Config file for automatic testing at travis-ci.org
+dist: xenial
 language: python
+cache: pip
+sudo: false
+
 python:
-  - "2.7"
-# Enable 3.7 without globally enabling sudo and dist: xenial for other build jobs
-matrix:
-  include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
-  exclude:
-    - python: "2.7"
-      env: DJANGO_VERSION=2.1
-    - python: "2.7"
-      env: DJANGO_VERSION=2.0
-env:
-  - DJANGO_VERSION=2.1
-  - DJANGO_VERSION=2.0
-  - DJANGO_VERSION=1.11
-before_install:
-  - pip install -q django==$DJANGO_VERSION
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+
 install:
-  - python setup.py develop
+  - pip install tox-travis
+
 script:
-- python setup.py test
+  - tox

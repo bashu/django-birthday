@@ -12,14 +12,17 @@ should use as the manager on your model.
 
 A model could look like this::
 
-    import birthday
     from django.db import models
+    from django.conf import settings
     
+    from birthday import BirthdayField, BirthdayManager
+
+
     class UserProfile(models.Model):
-        user = models.ForeignKey('auth.User')
-        birthday = birthday.fields.BirthdayField()
+        user = models.ForeignKey(settings.AUTH_USER_MODEL)
+        birthday = BirthdayField()
         
-        objects = birthday.managers.BirthdayManager()
+        objects = BirthdayManager()
         
         
 Get all user profiles within the next 30 days::

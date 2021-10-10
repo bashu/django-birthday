@@ -16,7 +16,7 @@ Authored by `Jonas Obrist <https://github.com/ojii>`_,  and some great
     :target: https://pypi.python.org/pypi/django-birthday/
 
 .. image:: https://img.shields.io/travis/bashu/django-birthday.svg
-    :target: https://travis-ci.org/bashu/django-birthday/
+    :target: https://travis-ci.com/github/bashu/django-birthday/
 
 Installation
 ------------
@@ -41,15 +41,16 @@ A model could look like this:
 .. code-block:: python
 
     from django.db import models
+    from django.conf import settings
 
-    import birthday
+    from birthday import BirthdayField, BirthdayManager
 
 
     class UserProfile(models.Model):
-        user = models.ForeignKey('auth.User')
-        birthday = birthday.fields.BirthdayField()
+        user = models.ForeignKey(settings.AUTH_USER_MODEL)
+        birthday = BirthdayField()
 
-        objects = birthday.managers.BirthdayManager()
+        objects = BirthdayManager()
 
 Get all user profiles within the next 30 days:
 
