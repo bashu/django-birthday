@@ -1,11 +1,6 @@
 django-birthday
 ===============
 
-django-birthday is a helper library to work with birthdays in models.
-
-Authored by `Jonas Obrist <https://github.com/ojii>`_,  and some great
-`contributors <https://github.com/bashu/django-birthday/contributors>`_.
-
 .. image:: https://img.shields.io/pypi/v/django-birthday.svg
     :target: https://pypi.python.org/pypi/django-birthday/
 
@@ -17,6 +12,11 @@ Authored by `Jonas Obrist <https://github.com/ojii>`_,  and some great
 
 .. image:: https://img.shields.io/travis/bashu/django-birthday.svg
     :target: https://travis-ci.com/github/bashu/django-birthday/
+
+django-birthday is a helper library to work with birthdays in models.
+
+Maintained by `Basil Shubin <https://github.com/bashu/>`_,  and some great
+`contributors <https://github.com/bashu/django-birthday/contributors>`_.
 
 Installation
 ------------
@@ -71,6 +71,12 @@ Or order the user profiles according to their birthday:
     UserProfile.objects.order_by_birthday()
 
 For more details, see the documentation_ at Read The Docs.
+
+
+Credits
+-------
+
+`django-birthday <https://github.com/bashu/django-birthday/>`_ was originally started by `Jonas Obrist <https://github.com/ojii>`_ who has now unfortunately abandoned the project.
 
 License
 -------
