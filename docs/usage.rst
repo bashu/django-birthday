@@ -10,7 +10,9 @@ functionality exposed by :class:`birthday.managers.BirthdayManager` which you
 should use as the manager on your model.
 
 
-A model could look like this::
+A model could look like this:
+
+.. code-block:: python
 
     from django.db import models
     from django.conf import settings
@@ -25,15 +27,21 @@ A model could look like this::
         objects = BirthdayManager()
         
         
-Get all user profiles within the next 30 days::
+Get all user profiles within the next 30 days:
+
+.. code-block:: python
 
     UserProfile.objects.get_upcoming_birthdays()
     
-Get all user profiles which have their birthday today::
+Get all user profiles which have their birthday today:
+
+.. code-block:: python
 
     UserProfile.objects.get_birthdays()
     
-Or order the user profiles according to their birthday::
+Or order the user profiles according to their birthday:
+
+.. code-block:: python
 
     UserProfile.objects.order_by_birthday()
 
