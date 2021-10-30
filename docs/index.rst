@@ -11,10 +11,8 @@ django-birthday is a helper library for Django to work with birthdays in models.
 **Warning**: This library is pretty hacky. Use it if you're lazy, not if you're
 concerned about your code quality!
 
-Contents:
-
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: Contents:
     
     usage
