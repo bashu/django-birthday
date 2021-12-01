@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from datetime import date
 
 from django.db import models
@@ -36,7 +34,7 @@ class BirthdayManager(models.Manager):
     def get_upcoming_birthdays(self, days=30, after=None, include_day=True, order=True, reverse=False):
         today = self._doy(after)
         limit = today + days
-        q = Q(**{"%s__gt%s" % (self._birthday_doy_field, "e" if include_day else ""): today})
+        q = Q(**{"{}__gt{}".format(self._birthday_doy_field, "e" if include_day else ""): today})
         q &= Q(**{"%s__lt" % self._birthday_doy_field: limit})
 
         if limit > 365:

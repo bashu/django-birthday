@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.core.exceptions import FieldError
 from django.db.models.fields import DateField, PositiveSmallIntegerField
 from django.db.models.signals import pre_save
@@ -15,6 +13,7 @@ def pre_save_listener(instance, **kwargs):
 
 
 class BirthdayField(DateField):
+
     def contribute_to_class(self, cls, name):
         if hasattr(cls._meta, "birthday_field"):
             raise FieldError("django-birthday does not support multiple BirthdayFields on a single model")
@@ -27,6 +26,6 @@ class BirthdayField(DateField):
 
             cls.add_to_class(self.doy_name, dayofyear_field)
 
-        super(BirthdayField, self).contribute_to_class(cls, name)
+        super().contribute_to_class(cls, name)
 
         pre_save.connect(pre_save_listener, sender=cls)
