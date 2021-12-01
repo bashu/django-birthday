@@ -21,6 +21,8 @@ Maintained by `Basil Shubin <https://github.com/bashu/>`_,  and some great
 Installation
 ------------
 
+First install the module, preferably in a virtual environment. It can be installed from PyPI:
+
 .. code-block:: bash
 
     pip install django-birthday
@@ -71,7 +73,6 @@ Or order the user profiles according to their birthday:
     UserProfile.objects.order_by_birthday()
 
 For more details, see the documentation_ at Read The Docs.
-
 
 Credits
 -------
