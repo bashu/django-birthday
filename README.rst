@@ -74,6 +74,12 @@ Or order the user profiles according to their birthday:
 
 For more details, see the documentation_ at Read The Docs.
 
+Contributing
+------------
+
+If you like this module, forked it, or would like to improve it, please let us know!
+Pull requests are welcome too. :-)
+
 Credits
 -------
 
