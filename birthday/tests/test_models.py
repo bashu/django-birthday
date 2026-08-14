@@ -36,12 +36,12 @@ class BirthdayTest(TestCase):
             obj.birthday_dayofyear_internal
             for obj in TestModel.objects.order_by_birthday()
         ]
-        assert doys == [1, 2, 365]
+        assert doys == [1, 2, 366]
         doys = [
             obj.birthday_dayofyear_internal
             for obj in TestModel.objects.order_by_birthday(reverse=True)
         ]
-        assert doys == [365, 2, 1]
+        assert doys == [366, 2, 1]
 
         years = [obj.birthday.year for obj in TestModel.objects.order_by("birthday")]
         assert years == [2000, 2001, 2002]
@@ -61,17 +61,17 @@ class BirthdayTest(TestCase):
             obj.birthday_dayofyear_internal
             for obj in TestModel.objects.get_upcoming_birthdays(30, dec31)
         ]
-        assert doys == [365, 1, 2]
+        assert doys == [366, 1, 2]
         doys = [
             obj.birthday_dayofyear_internal
             for obj in TestModel.objects.get_upcoming_birthdays(30, dec31, reverse=True)
         ]
-        assert doys == [2, 1, 365]
+        assert doys == [2, 1, 366]
         doys = [
             obj.birthday_dayofyear_internal
             for obj in TestModel.objects.get_upcoming_birthdays(30, dec31, order=False)
         ]
-        assert doys == [1, 2, 365]
+        assert doys == [1, 2, 366]
 
         upcoming = TestModel.objects.get_upcoming_birthdays(
             30,
@@ -98,18 +98,7 @@ class BirthdayTest(TestCase):
         doys = sorted(
             TestModel.objects.values_list("birthday_dayofyear_internal", flat=True),
         )
-        assert doys == [1, 2, 365]
-
-    @isolate_apps("birthday.tests")
-    def test_exception(self):
-        class BrokenModel(models.Model):
-            birthday = BirthdayField()
-
-            def __str__(self):
-                return "broken"
-
-        with pytest.raises(FieldError):
-            BirthdayField().contribute_to_class(BrokenModel, "another_birthday")
+        assert doys == [1, 2, 366]
 
     def test_issue_5(self):
         # reproduces issue #5 end-to-end: manager queries must be correct
@@ -122,3 +111,34 @@ class BirthdayTest(TestCase):
         jan1 = date(year=2010, month=1, day=1)
         assert TestModel.objects.get_birthdays(jan1).count() == 1
         assert TestModel.objects.get_upcoming_birthdays(30, jan1).count() == 2
+
+    def test_issue_8(self):
+        # 2000 is leap, 2001 is not -- same calendar day must produce the
+        # same cached day-of-year regardless.
+        #
+        # born in a leap year, matched on the same month/day in a non-leap year
+        leap_born = TestModel.objects.create(birthday=date(2000, 3, 15))
+        assert leap_born in TestModel.objects.get_birthdays(date(2023, 3, 15))
+
+        # born in a non-leap year, matched on the same month/day in a leap year
+        nonleap_born = TestModel.objects.create(birthday=date(2001, 3, 15))
+        assert nonleap_born in TestModel.objects.get_birthdays(date(2024, 3, 15))
+
+        leap_born.refresh_from_db()
+        nonleap_born.refresh_from_db()
+
+        assert (
+            leap_born.birthday_dayofyear_internal
+            == nonleap_born.birthday_dayofyear_internal
+        )
+
+    @isolate_apps("birthday.tests")
+    def test_exception(self):
+        class BrokenModel(models.Model):
+            birthday = BirthdayField()
+
+            def __str__(self):
+                return "broken"
+
+        with pytest.raises(FieldError):
+            BirthdayField().contribute_to_class(BrokenModel, "another_birthday")

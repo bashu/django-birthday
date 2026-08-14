@@ -3,6 +3,8 @@ from django.db.models.fields import DateField
 from django.db.models.fields import PositiveSmallIntegerField
 from django.db.models.signals import pre_save
 
+from . import utils
+
 
 def handle_pre_save(instance, **kwargs):
     field_obj = instance._meta.birthday_field  # noqa: SLF001
@@ -10,7 +12,7 @@ def handle_pre_save(instance, **kwargs):
     birthday = getattr(instance, field_obj.name)
     if not birthday:
         return
-    setattr(instance, field_obj.doy_name, birthday.timetuple().tm_yday)
+    setattr(instance, field_obj.doy_name, utils.doy(birthday))
 
 
 class BirthdayField(DateField):

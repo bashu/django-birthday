@@ -4,6 +4,8 @@ from django.apps import apps as global_apps
 from django.db import DEFAULT_DB_ALIAS
 from django.db import router
 
+from . import utils
+
 BATCH_SIZE = 500
 
 
@@ -46,7 +48,7 @@ def handle_post_migrate(
 
         batch = []
         for instance in queryset:
-            setattr(instance, doy_name, getattr(instance, name).timetuple().tm_yday)
+            setattr(instance, doy_name, utils.doy(getattr(instance, name)))
             batch.append(instance)
             if len(batch) >= BATCH_SIZE:
                 model._base_manager.using(using).bulk_update(  # noqa: SLF001

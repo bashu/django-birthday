@@ -5,11 +5,15 @@ from django.db.models import When
 from django.db.models.query_utils import Q
 from django.utils import timezone
 
-YEAR = 365
+from . import utils
+
+# maximum possible canonical day-of-year value (Dec 31 in the reference
+# leap year) -- must stay in sync with birthday.utils.doy's range.
+YEAR = 366
 
 
 def _order(manager, *, reverse=False, case=False):
-    cdoy = timezone.localdate().timetuple().tm_yday
+    cdoy = utils.doy(timezone.localdate())
     bdoy = manager._birthday_doy_field  # noqa: SLF001
     if case:
         qs = manager.annotate(
@@ -36,7 +40,7 @@ class BirthdayManager(models.Manager):
     def _doy(self, day):
         if not day:
             day = timezone.localdate()
-        return day.timetuple().tm_yday
+        return utils.doy(day)
 
     def get_upcoming_birthdays(
         self,
