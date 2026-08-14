@@ -4,7 +4,7 @@ requires = [ "setuptools>=61" ]
 
 [project]
 name = "django-birthday"
-version = "0.1.4"
+version = "0.2.0"
 description = "Helper field and manager for working with birthdays"
 license = "BSD-3-Clause"
 maintainers = [ { name = "Basil Shubin", email = "basil.shubin@gmail.com" } ]
