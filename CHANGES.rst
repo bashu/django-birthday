@@ -1,9 +1,11 @@
 Changes
 -------
 
-0.1.4 (WIP)
+0.2.0 (2026-08-14)
 ~~~~~~~~~~~~~~~~~~
 
+* Dropped support for Python < 3.10 and Django < 5.2; migrated packaging
+  from ``setup.py``/``setup.cfg`` to ``pyproject.toml``.
 * Added an automatic ``post_migrate`` handler that backfills the cached
   day-of-year column for pre-existing rows and rows written via
   ``bulk_create()``/``update()`` whose value was never computed, so
