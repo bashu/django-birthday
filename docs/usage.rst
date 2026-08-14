@@ -10,7 +10,9 @@ functionality exposed by :class:`birthday.managers.BirthdayManager` which you
 should use as the manager on your model.
 
 
-A model could look like this::
+A model could look like this:
+
+.. code-block:: python
 
     from django.db import models
     from django.conf import settings
@@ -25,17 +27,49 @@ A model could look like this::
         objects = BirthdayManager()
         
         
-Get all user profiles within the next 30 days::
+Get all user profiles within the next 30 days:
+
+.. code-block:: python
 
     UserProfile.objects.get_upcoming_birthdays()
     
-Get all user profiles which have their birthday today::
+Get all user profiles which have their birthday today:
+
+.. code-block:: python
 
     UserProfile.objects.get_birthdays()
     
-Or order the user profiles according to their birthday::
+Or order the user profiles according to their birthday:
+
+.. code-block:: python
 
     UserProfile.objects.order_by_birthday()
+
+
+Automatic backfill on migrate
+------------------------------
+
+The cached day-of-year column is normally kept in sync by a ``pre_save``
+signal receiver. Any row written *before* your model started using
+:class:`birthday.fields.BirthdayField` -- or written via
+:meth:`~django.db.models.query.QuerySet.bulk_create` or
+:meth:`~django.db.models.query.QuerySet.update`, both of which bypass
+``pre_save`` -- would otherwise end up with an empty cache, and
+:class:`birthday.managers.BirthdayManager` would silently return incomplete
+results for those rows.
+
+django-birthday registers a ``post_migrate`` handler that runs automatically
+every time you run ``manage.py migrate``. For every model in every installed
+app that uses a :class:`birthday.fields.BirthdayField`, it finds rows whose
+cached value has never been computed and backfills it, in efficient batches,
+without loading whole tables into memory and without re-triggering
+``pre_save`` for every row.
+
+This is fully automatic -- nothing to configure, and nothing to run by hand.
+If you add ``BirthdayField`` to an existing model with existing data, running
+``manage.py migrate`` afterwards (Django always emits the ``post_migrate``
+signal, even when there's nothing new to apply) will bring the cache up to
+date.
 
 
 Method References

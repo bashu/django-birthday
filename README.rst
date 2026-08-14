@@ -1,25 +1,27 @@
 django-birthday
 ===============
 
+.. image:: https://badge.fury.io/py/django-birthday.svg
+    :target: https://badge.fury.io/py/django-birthday
+
+.. image:: https://img.shields.io/pypi/pyversions/django-birthday.svg
+    :target: https://pypi.python.org/pypi/django-birthday/
+
+.. image:: https://img.shields.io/pypi/djversions/django-birthday.svg
+    :target: https://pypi.python.org/pypi/django-birthday/
+
+.. image:: https://github.com/bashu/django-birthday/actions/workflows/test.yml/badge.svg
+    :target: https://github.com/bashu/django-birthday/actions/workflows/test.yml
+
 django-birthday is a helper library to work with birthdays in models.
 
-Authored by `Jonas Obrist <https://github.com/ojii>`_,  and some great
+Maintained by `Basil Shubin <https://github.com/bashu/>`_,  and some great
 `contributors <https://github.com/bashu/django-birthday/contributors>`_.
-
-.. image:: https://img.shields.io/pypi/v/django-birthday.svg
-    :target: https://pypi.python.org/pypi/django-birthday/
-
-.. image:: https://img.shields.io/pypi/dm/django-birthday.svg
-    :target: https://pypi.python.org/pypi/django-birthday/
-
-.. image:: https://img.shields.io/github/license/bashu/django-birthday.svg
-    :target: https://pypi.python.org/pypi/django-birthday/
-
-.. image:: https://img.shields.io/travis/bashu/django-birthday.svg
-    :target: https://travis-ci.com/github/bashu/django-birthday/
 
 Installation
 ------------
+
+First install the module, preferably in a virtual environment. It can be installed from PyPI:
 
 .. code-block:: bash
 
@@ -71,6 +73,17 @@ Or order the user profiles according to their birthday:
     UserProfile.objects.order_by_birthday()
 
 For more details, see the documentation_ at Read The Docs.
+
+Contributing
+------------
+
+If you like this module, forked it, or would like to improve it, please let us know!
+Pull requests are welcome too. :-)
+
+Credits
+-------
+
+`django-birthday <https://github.com/bashu/django-birthday/>`_ was originally started by `Jonas Obrist <https://github.com/ojii>`_ who has now unfortunately abandoned the project.
 
 License
 -------
