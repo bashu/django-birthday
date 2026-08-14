@@ -1,2 +1,2 @@
-from .fields import BirthdayField  # noqa
-from .managers import BirthdayManager  # noqa
+from .fields import BirthdayField  # noqa: F401
+from .managers import BirthdayManager  # noqa: F401

@@ -1,12 +1,4 @@
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-import re
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-SECRET_KEY = "DUMMY_SECRET_KEY"
-
-INTERNAL_IPS = []
+SECRET_KEY = "YOUR_SECRET_KEY"  # noqa: S105
 
 # Application definition
 
@@ -15,7 +7,8 @@ PROJECT_APPS = ["birthday.tests", "birthday"]
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
-] + PROJECT_APPS
+    *PROJECT_APPS,
+]
 
 TEMPLATES = [
     {

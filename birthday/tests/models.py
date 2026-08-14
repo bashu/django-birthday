@@ -1,6 +1,7 @@
 from django.db import models
 
-from birthday import BirthdayField, BirthdayManager
+from birthday import BirthdayField
+from birthday import BirthdayManager
 
 
 class TestModel(models.Model):
@@ -11,3 +12,6 @@ class TestModel(models.Model):
 
     class Meta:
         ordering = ("pk",)
+
+    def __str__(self):
+        return str(self.birthday)
