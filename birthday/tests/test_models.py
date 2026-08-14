@@ -1,14 +1,18 @@
 # ruff: noqa: PLR2004, SLF001
 from datetime import date
 
+from django.apps import apps
 from django.core.exceptions import FieldError
+from django.db import DEFAULT_DB_ALIAS
 from django.db import models
 from django.test import TestCase
+from django.test.utils import isolate_apps
 
 import pytest
 
 from birthday.fields import BirthdayField
 from birthday.fields import handle_pre_save
+from birthday.handlers import handle_post_migrate
 
 from .models import TestModel
 
@@ -83,6 +87,20 @@ class BirthdayTest(TestCase):
         handle_pre_save(instance)
         assert instance.birthday_dayofyear_internal == 42
 
+    def test_handle_post_migrate(self):
+        # simulate rows written before BirthdayField existed, or via
+        # bulk_create()/update(), which bypass pre_save
+        TestModel.objects.update(birthday_dayofyear_internal=None)
+
+        app_config = apps.get_app_config("tests")
+        handle_post_migrate(app_config, using=DEFAULT_DB_ALIAS)
+
+        doys = sorted(
+            TestModel.objects.values_list("birthday_dayofyear_internal", flat=True),
+        )
+        assert doys == [1, 2, 365]
+
+    @isolate_apps("birthday.tests")
     def test_exception(self):
         class BrokenModel(models.Model):
             birthday = BirthdayField()
@@ -92,3 +110,15 @@ class BirthdayTest(TestCase):
 
         with pytest.raises(FieldError):
             BirthdayField().contribute_to_class(BrokenModel, "another_birthday")
+
+    def test_issue_5(self):
+        # reproduces issue #5 end-to-end: manager queries must be correct
+        # again after a real backfill run
+        TestModel.objects.update(birthday_dayofyear_internal=None)
+
+        app_config = apps.get_app_config("tests")
+        handle_post_migrate(app_config, using=DEFAULT_DB_ALIAS)
+
+        jan1 = date(year=2010, month=1, day=1)
+        assert TestModel.objects.get_birthdays(jan1).count() == 1
+        assert TestModel.objects.get_upcoming_birthdays(30, jan1).count() == 2
