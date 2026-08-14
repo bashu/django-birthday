@@ -4,7 +4,7 @@ from django.db.models.fields import PositiveSmallIntegerField
 from django.db.models.signals import pre_save
 
 
-def pre_save_listener(instance, **kwargs):
+def handle_pre_save(instance, **kwargs):
     field_obj = instance._meta.birthday_field  # noqa: SLF001
 
     birthday = getattr(instance, field_obj.name)
@@ -36,4 +36,4 @@ class BirthdayField(DateField):
 
         super().contribute_to_class(cls, name)
 
-        pre_save.connect(pre_save_listener, sender=cls)
+        pre_save.connect(handle_pre_save, sender=cls)

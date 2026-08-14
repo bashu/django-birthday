@@ -8,6 +8,7 @@ from django.test import TestCase
 import pytest
 
 from birthday.fields import BirthdayField
+from birthday.fields import handle_pre_save
 
 from .models import TestModel
 
@@ -75,6 +76,12 @@ class BirthdayTest(TestCase):
         )
         assert upcoming.count() == 2
         assert TestModel.objects.get_birthdays().count() in [0, 1]
+
+    def test_handle_pre_save(self):
+        instance = TestModel(birthday=None)
+        instance.birthday_dayofyear_internal = 42
+        handle_pre_save(instance)
+        assert instance.birthday_dayofyear_internal == 42
 
     def test_exception(self):
         class BrokenModel(models.Model):
