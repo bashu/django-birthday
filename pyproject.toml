@@ -163,6 +163,6 @@ ini_options.addopts = [ "--ds=birthday.tests.settings", "--reuse-db", "--import-
 
 # ==== Coverage ====
 [tool.coverage]
+run.source = [ "birthday" ]
 run.omit = [ "*/migrations/*", "*/tests/*" ]
 run.relative_files = true
-run.source = [ "birthday" ]
