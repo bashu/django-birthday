@@ -15,7 +15,7 @@ django-birthday
 
 django-birthday is a helper library to work with birthdays in models.
 
-Maintained by `Basil Shubin <https://github.com/bashu/>`_,  and some great
+Maintained by `Basil Shubin <https://github.com/bashu/>`_ (who is available for freelance/contract work),  and some great
 `contributors <https://github.com/bashu/django-birthday/contributors>`_.
 
 Installation
