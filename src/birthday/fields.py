@@ -1,4 +1,7 @@
+from typing import Any
+
 from django.core.exceptions import FieldError
+from django.db.models import Model
 from django.db.models.fields import DateField
 from django.db.models.fields import PositiveSmallIntegerField
 from django.db.models.signals import pre_save
@@ -16,14 +19,21 @@ def handle_pre_save(instance, **kwargs):
 
 
 class BirthdayField(DateField):
-    def contribute_to_class(self, cls, name):
+    def contribute_to_class(
+        self,
+        cls: type[Model],
+        name: str,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         if hasattr(cls._meta, "birthday_field"):
             msg = (
                 "django-birthday does not support multiple "
                 "BirthdayFields on a single model"
             )
             raise FieldError(msg)
-        cls._meta.birthday_field = self
+        # django-stubs doesn't know about this attribute: the field adds it itself.
+        cls._meta.birthday_field = self  # type: ignore[attr-defined]
 
         self.doy_name = f"{name}_dayofyear_internal"
         if not hasattr(cls, self.doy_name):
@@ -36,6 +46,6 @@ class BirthdayField(DateField):
 
             cls.add_to_class(self.doy_name, dayofyear_field)
 
-        super().contribute_to_class(cls, name)
+        super().contribute_to_class(cls, name, *args, **kwargs)
 
         pre_save.connect(handle_pre_save, sender=cls)
