@@ -2,16 +2,16 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/bashu/django-birthday/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                     |    Stmts |     Miss |   Cover |   Missing |
-|------------------------- | -------: | -------: | ------: | --------: |
-| birthday/\_\_init\_\_.py |        2 |        0 |    100% |           |
-| birthday/apps.py         |        8 |        0 |    100% |           |
-| birthday/fields.py       |       24 |        0 |    100% |           |
-| birthday/handlers.py     |       29 |        6 |     79% |22-23, 34, 37, 54-59 |
-| birthday/managers.py     |       46 |        0 |    100% |           |
-| birthday/models.py       |        0 |        0 |    100% |           |
-| birthday/utils.py        |        4 |        0 |    100% |           |
-| **TOTAL**                |  **113** |    **6** | **95%** |           |
+| Name                         |    Stmts |     Miss |   Cover |   Missing |
+|----------------------------- | -------: | -------: | ------: | --------: |
+| src/birthday/\_\_init\_\_.py |        2 |        0 |    100% |           |
+| src/birthday/apps.py         |        8 |        0 |    100% |           |
+| src/birthday/fields.py       |       24 |        0 |    100% |           |
+| src/birthday/handlers.py     |       29 |        6 |     79% |22-23, 34, 37, 54-59 |
+| src/birthday/managers.py     |       46 |        0 |    100% |           |
+| src/birthday/models.py       |        0 |        0 |    100% |           |
+| src/birthday/utils.py        |        4 |        0 |    100% |           |
+| **TOTAL**                    |  **113** |    **6** | **95%** |           |
 
 
 ## Setup coverage badge
