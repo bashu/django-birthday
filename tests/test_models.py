@@ -1,5 +1,7 @@
 # ruff: noqa: PLR2004, SLF001
+from datetime import UTC
 from datetime import date
+from datetime import datetime
 
 from django.apps import apps
 from django.core.exceptions import FieldError
@@ -8,6 +10,7 @@ from django.db import models
 from django.test.utils import isolate_apps
 
 import pytest
+from time_machine import TimeMachineFixture
 
 from birthday.fields import BirthdayField
 from birthday.fields import handle_pre_save
@@ -44,7 +47,7 @@ def test_ordering() -> None:
 
 
 @pytest.mark.usefixtures("birthdays")
-def test_manager() -> None:
+def test_manager(time_machine: TimeMachineFixture) -> None:
     jan1 = date(year=2010, month=1, day=1)
     assert TestModel.objects.get_birthdays(jan1).count() == 1
     assert TestModel.objects.get_upcoming_birthdays(30, jan1).count() == 2
@@ -77,7 +80,10 @@ def test_manager() -> None:
         include_day=False,
     )
     assert upcoming.count() == 2
-    assert TestModel.objects.get_birthdays().count() in [0, 1]
+
+    # Noon UTC keeps the local date on Jan 1 for any TIME_ZONE setting.
+    time_machine.move_to(datetime(2010, 1, 1, 12, tzinfo=UTC))
+    assert TestModel.objects.get_birthdays().count() == 1
 
 
 @pytest.mark.usefixtures("birthdays")
