@@ -132,7 +132,7 @@ class BirthdayTest(TestCase):
             == nonleap_born.birthday_dayofyear_internal
         )
 
-    @isolate_apps("birthday.tests")
+    @isolate_apps("tests")
     def test_exception(self):
         class BrokenModel(models.Model):
             birthday = BirthdayField()
