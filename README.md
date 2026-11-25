@@ -6,12 +6,12 @@
 |----------------------------- | -------: | -------: | ------: | --------: |
 | src/birthday/\_\_init\_\_.py |        2 |        0 |    100% |           |
 | src/birthday/apps.py         |        8 |        0 |    100% |           |
-| src/birthday/fields.py       |       24 |        0 |    100% |           |
+| src/birthday/fields.py       |       26 |        0 |    100% |           |
 | src/birthday/handlers.py     |       29 |        6 |     79% |22-23, 34, 37, 54-59 |
 | src/birthday/managers.py     |       46 |        0 |    100% |           |
 | src/birthday/models.py       |        0 |        0 |    100% |           |
 | src/birthday/utils.py        |        4 |        0 |    100% |           |
-| **TOTAL**                    |  **113** |    **6** | **95%** |           |
+| **TOTAL**                    |  **115** |    **6** | **95%** |           |
 
 
 ## Setup coverage badge
