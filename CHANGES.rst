@@ -1,6 +1,17 @@
 Changes
 -------
 
+0.3.1 (2026-11-25)
+~~~~~~~~~~~~~~~~~~
+
+* Switched the build backend from setuptools to hatchling and moved the
+  package to a ``src/`` layout; tests now live in a top-level ``tests/``
+  directory instead of ``birthday.tests``.
+* Converted the test suite from ``django.test.TestCase`` to plain pytest
+  functions and fixtures.
+* ``BirthdayField.contribute_to_class()`` now accepts and passes through
+  the extra arguments Django may give it, such as ``private_only``.
+
 0.3.0 (2026-10-10)
 ~~~~~~~~~~~~~~~~~~
 

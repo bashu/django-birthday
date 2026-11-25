@@ -35,7 +35,7 @@ def _order(manager, *, reverse=False, case=False):
 class BirthdayManager(models.Manager):
     @property
     def _birthday_doy_field(self):
-        return self.model._meta.birthday_field.doy_name  # noqa: SLF001
+        return self.model._meta.birthday_field.doy_name  # type: ignore[attr-defined]  # noqa: SLF001
 
     def _doy(self, day):
         if not day:

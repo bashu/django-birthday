@@ -2,7 +2,7 @@ SECRET_KEY = "DUMMY_SECRET_KEY"  # noqa: S105
 
 # Application definition
 
-PROJECT_APPS = ["birthday.tests", "birthday"]
+PROJECT_APPS = ["tests", "birthday"]
 
 INSTALLED_APPS = [
     *PROJECT_APPS,
