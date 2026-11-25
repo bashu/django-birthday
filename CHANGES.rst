@@ -7,6 +7,8 @@ Unreleased
 * Switched the build backend from setuptools to hatchling and moved the
   package to a ``src/`` layout; tests now live in a top-level ``tests/``
   directory instead of ``birthday.tests``.
+* Converted the test suite from ``django.test.TestCase`` to plain pytest
+  functions and fixtures.
 
 0.3.0 (2026-10-10)
 ~~~~~~~~~~~~~~~~~~
