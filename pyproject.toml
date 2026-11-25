@@ -4,7 +4,7 @@ requires = [ "hatch-fancy-pypi-readme>=24.1", "hatchling>=1.27" ]
 
 [project]
 name = "django-birthday"
-version = "0.3.0"
+version = "0.3.1"
 description = "Helper field and manager for working with birthdays"
 license = "BSD-3-Clause"
 license-files = [ "LICENSE" ]
